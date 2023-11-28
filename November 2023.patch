@@ -1,0 +1,457 @@
+commit 515bc324e6a97957def1251333b261677f55e13a
+Author: Agnieszka Mika <agnieszka.mika1976@gmail.com>
+Date:   Mon Nov 27 14:43:37 2023 +0100
+
+    second commit
+
+diff --git a/src/test/java/CssSelectorsTest.java b/src/test/java/CssSelectorsTest.java
+new file mode 100644
+index 0000000..fc670fa
+--- /dev/null
++++ b/src/test/java/CssSelectorsTest.java
+@@ -0,0 +1,68 @@
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.testng.annotations.Test;
++
++public class CssSelectorsTest {
++
++    @Test
++    public void findElements(){
++
++        WebDriver driver = new ChromeDriver();
++        driver.get("https://testeroprogramowania.github.io/selenium/basics.html");
++
++        By cssId = By.cssSelector("#clickOnMe");  // # - selector oznaczający Id
++        driver.findElement(cssId);
++
++        By cssClass = By.cssSelector(".topSecret");
++        driver.findElement(cssClass);
++
++        By cssTag = By.cssSelector("input");
++        driver.findElement(cssTag).sendKeys("Pierwszy");
++
++        By cssName = By.cssSelector("[name='fname']");
++        driver.findElement(cssName);
++
++        By cssClass2 = By.cssSelector("[class='topSecret']");
++        driver.findElement(cssClass2);
++
++        By all = By.cssSelector("*");
++        driver.findElement(all);
++
++        By ulInDiv  = By.cssSelector("div ul"); //zwraca listę w elemencie blokowym div
++        By trInTable = By.cssSelector("table tr");  //zwraca wiersze w tabeli
++        By trInBody = By.cssSelector("tbody tr");  //zwraca wiersze w body tabeli
++        driver.findElement(ulInDiv); //findElement zwraca tylko pieerwszy znaleziony element,
++        driver.findElement(trInTable); // wszystkie za pomocą metody findElements
++        driver.findElement(trInBody);
++
++        By firstChildInUL = By.cssSelector("div>ul");    //zwraca pierwsze dziecko wo tagu Ul w DIV
++        By firstChildInTbody = By.cssSelector("tbody>tr");  //zwraca pierwsze dziecko o tagu tr w tbody
++        driver.findElement(firstChildInUL);
++        driver.findElement(firstChildInTbody);
++
++        By firstFormAfterLabel = By.cssSelector("label + form");  //zwraca pierwszy formularz za elementem label
++        By allFormsAfterLabel = By.cssSelector("label ~ form");  //zwraca wszystkie formularze po label
++        driver.findElement(firstFormAfterLabel);
++        driver.findElement(allFormsAfterLabel);
++
++        By attrTag = By.cssSelector("input[name='fname']");  //zwraca tag input z atrybutem name=fname
++        By attrContains = By.cssSelector("[name*='name']");  //zwraca element zawierajacy w atrybucie 'name'
++        By attrStarts = By.cssSelector("[name^='f']");  //zwraca element zawietający atrybut zaczynający się na 'f'
++        By attrEnds = By.cssSelector("[name$='name']");  //zwraca element zawierający atrybut kończący się na 'name'
++        driver.findElement(attrTag);
++        driver.findElement(attrContains);
++        driver.findElement(attrStarts);
++        driver.findElement(attrEnds);
++
++        By firstChild = By.cssSelector("li:first-child");
++        By lastChild = By.cssSelector("li:last-child");
++        By thirdChild = By.cssSelector("li:nth-child(3)");
++        driver.findElement(firstChild);
++        driver.findElement(lastChild);
++        driver.findElement(thirdChild);
++
++
++
++    }
++}
+diff --git a/src/test/java/SecondTest.java b/src/test/java/SecondTest.java
+new file mode 100644
+index 0000000..b083d0f
+--- /dev/null
++++ b/src/test/java/SecondTest.java
+@@ -0,0 +1,20 @@
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.testng.Assert;
++import org.testng.annotations.Test;
++
++public class SecondTest {
++
++    @Test
++    public void findSeleniumTutorial(){
++        WebDriver driver = new ChromeDriver();
++        driver.get("http://seleniumdemo.com/");
++        driver.findElement(By.xpath("//span[text()='Shop']")).click();
++        WebElement seleniumProduct = driver.findElement(By.xpath("//h2[text()='Java Selenium WebDriver']"));
++        Assert.assertTrue(seleniumProduct.isDisplayed());
++        driver.quit();
++
++    }
++}
+diff --git a/src/test/java/SelectorTest.java b/src/test/java/SelectorTest.java
+new file mode 100644
+index 0000000..b0e6fd8
+--- /dev/null
++++ b/src/test/java/SelectorTest.java
+@@ -0,0 +1,42 @@
++import org.openqa.selenium.By;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.WebElement;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.testng.annotations.Test;
++
++import java.util.List;
++
++public class SelectorTest {
++
++    @Test
++    public void findElements() {
++        WebDriver driver = new ChromeDriver();
++        driver.get("https://testeroprogramowania.github.io/selenium/basics.html");
++        driver.findElement(By.id("clickOnMe"));
++
++        /*By buttonId = By.id("clickOnMe");
++        WebElement clickOnMeButton = driver.findElement(buttonId);
++        clickOnMeButton.click();
++
++        By firstName = By.name("fname");
++        WebElement firstNameInput = driver.findElement(firstName);*/
++        driver.findElement(By.name("fname"));
++
++        driver.findElement(By.className("topSecret"));
++
++
++        By inputLocator = By.tagName("input");
++        WebElement input = driver.findElement(inputLocator);
++        input.sendKeys("Pierwszy");
++        List<WebElement> inputs = driver.findElements(inputLocator);
++        System.out.println(inputs.size());
++
++        By linkText = By.linkText("Visit W3Schools.com!");
++        WebElement schoolLink = driver.findElement(linkText);
++
++        By partialLink = By.partialLinkText("Visit");
++        WebElement schoolPartial = driver.findElement(partialLink);
++
++
++    }
++}
+diff --git a/src/test/java/WebDriverManagerTest.java b/src/test/java/WebDriverManagerTest.java
+new file mode 100644
+index 0000000..bf203c7
+--- /dev/null
++++ b/src/test/java/WebDriverManagerTest.java
+@@ -0,0 +1,20 @@
++import io.github.bonigarcia.wdm.WebDriverManager;
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.openqa.selenium.firefox.FirefoxDriver;
++
++import org.testng.annotations.Test;
++
++
++
++public class WebDriverManagerTest {
++
++
++
++    @Test
++    public void openBrowser(){
++        WebDriverManager.firefoxdriver().setup();
++        WebDriver driver = new FirefoxDriver();
++
++    }
++}
+
+commit c659616a1214de4233da8b16e6be6a9fd38b24dc
+Author: Agnieszka Mika <agnieszka.mika1976@gmail.com>
+Date:   Mon Nov 27 14:43:21 2023 +0100
+
+    second commit
+
+diff --git a/pom.xml b/pom.xml
+index 1ae6569..71565ad 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -32,7 +32,12 @@
+       <version>7.8.0</version>
+       <scope>test</scope>
+     </dependency>
+-
++    <dependency>
++      <groupId>io.github.bonigarcia</groupId>
++      <artifactId>webdrivermanager</artifactId>
++      <version>5.6.2</version>
++      <scope>test</scope>
++    </dependency>
+ 
+   </dependencies>
+ </project>
+diff --git a/src/test/java/SeleniumTest.java b/src/test/java/SeleniumTest.java
+index f12702f..f6e39b7 100644
+--- a/src/test/java/SeleniumTest.java
++++ b/src/test/java/SeleniumTest.java
+@@ -1,16 +1,60 @@
+-import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.*;
+ import org.openqa.selenium.chrome.ChromeDriver;
++import org.openqa.selenium.firefox.FirefoxDriver;
++import org.openqa.selenium.safari.SafariDriver;
++import org.testng.Assert;
+ import org.testng.annotations.AfterTest;
+ import org.testng.annotations.Test;
+ 
+ public class SeleniumTest {
+ 
+-    public static void main(String[] args) {
+-        WebDriver driver = new ChromeDriver();
++    @Test
++    public void openGooglePage(){
++
++       /* WebDriver driver = getDriver("chrome");
++        driver.manage().window().maximize();
++        driver.get("https://www.google.com");
++        // znalezienie przycisku
++        WebElement agreeButton = driver.findElement(By.xpath("//div[text()='Accept all']"));
++// klikniecie przycisku
++        agreeButton.click();
++        // znajdz pole wyszukiwania
++        WebElement searchField = driver.findElement(By.name("q"));
++        // wprowadz wartosc Selenium do pola
++        searchField.sendKeys("Selenium");
++        // zasymuluj nacisniecie przycisku Enter
++        searchField.sendKeys(Keys.ENTER);
++        // znalezc rezultat
++        WebElement result = driver.findElement(By.xpath("//a[contains(@href,'selenium.dev')]//h3"));
++
++        Assert.assertTrue(result.isDisplayed());*/
++
++       WebDriver driver = getDriver("chrome");
++       driver.manage().window().maximize();
++       driver.get("https://www.google.com/");
++       // driver.quit(); // zamyka wszystkie okna
++        // driver. close(); // zamyka tylko pierwsze okno
++
++       WebElement agreeButton = driver.findElement(By.xpath("//div[text()='Accept all']"));
++
++        agreeButton.click();
+ 
++
++
++        WebElement searchField = driver.findElement(By.name("q"));
++        searchField.sendKeys("Selenium");
++        searchField.sendKeys(Keys.ENTER);
++        WebElement result = driver.findElement(By.xpath("//*[@id=\"rso\"]/div[1]/div/div/div/div/div/div/div/div[1]/div/span/a"));
++        Assert.assertTrue(result.isDisplayed());
+     }
+-    @Test
+-    public void sampleTest(){
+-        System.out.println("Hello");
++
++    public WebDriver getDriver(String browser){
++        if(browser.equals("chrome")){
++            return new ChromeDriver();
++        } else if (browser.equals("firefox")) {
++            return new FirefoxDriver();
++
++        } else throw new InvalidArgumentException("Invalid browser name");
++
+     }
+ }
+
+commit b534711002c89b0d1f519946c393dda5dcd8ec97
+Author: Agnieszka Mika <agnieszka.mika1976@gmail.com>
+Date:   Wed Nov 22 09:59:25 2023 +0100
+
+    first commit
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..a91c35d
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,39 @@
++target/
++!.mvn/wrapper/maven-wrapper.jar
++!**/src/main/**/target/
++!**/src/test/**/target/
++
++### IntelliJ IDEA ###
++.idea/modules.xml
++.idea/jarRepositories.xml
++.idea/compiler.xml
++.idea/libraries/
++*.iws
++*.iml
++*.ipr
++
++### Eclipse ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++build/
++!**/src/main/**/build/
++!**/src/test/**/build/
++
++### VS Code ###
++.vscode/
++
++### Mac OS ###
++.DS_Store
++/.idea/
+diff --git a/pom.xml b/pom.xml
+new file mode 100644
+index 0000000..1ae6569
+--- /dev/null
++++ b/pom.xml
+@@ -0,0 +1,38 @@
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
++  <modelVersion>4.0.0</modelVersion>
++
++  <groupId>AgaMika</groupId>
++  <artifactId>tutorialselenium</artifactId>
++  <version>1.0-SNAPSHOT</version>
++  <packaging>jar</packaging>
++
++  <name>tutorialselenium</name>
++  <url>http://maven.apache.org</url>
++
++  <properties>
++    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++  </properties>
++
++  <dependencies>
++    <dependency>
++      <groupId>junit</groupId>
++      <artifactId>junit</artifactId>
++      <version>3.8.1</version>
++      <scope>test</scope>
++    </dependency>
++    <dependency>
++      <groupId>org.seleniumhq.selenium</groupId>
++      <artifactId>selenium-java</artifactId>
++      <version>4.15.0</version>
++    </dependency>
++    <dependency>
++      <groupId>org.testng</groupId>
++      <artifactId>testng</artifactId>
++      <version>7.8.0</version>
++      <scope>test</scope>
++    </dependency>
++
++
++  </dependencies>
++</project>
+diff --git a/src/main/java/AgaMika/App.java b/src/main/java/AgaMika/App.java
+new file mode 100644
+index 0000000..065adeb
+--- /dev/null
++++ b/src/main/java/AgaMika/App.java
+@@ -0,0 +1,13 @@
++package AgaMika;
++
++/**
++ * Hello world!
++ *
++ */
++public class App 
++{
++    public static void main( String[] args )
++    {
++        System.out.println( "Hello World!" );
++    }
++}
+diff --git a/src/test/java/AgaMika/AppTest.java b/src/test/java/AgaMika/AppTest.java
+new file mode 100644
+index 0000000..701fae3
+--- /dev/null
++++ b/src/test/java/AgaMika/AppTest.java
+@@ -0,0 +1,38 @@
++package AgaMika;
++
++import junit.framework.Test;
++import junit.framework.TestCase;
++import junit.framework.TestSuite;
++
++/**
++ * Unit test for simple App.
++ */
++public class AppTest 
++    extends TestCase
++{
++    /**
++     * Create the test case
++     *
++     * @param testName name of the test case
++     */
++    public AppTest( String testName )
++    {
++        super( testName );
++    }
++
++    /**
++     * @return the suite of tests being tested
++     */
++    public static Test suite()
++    {
++        return new TestSuite( AppTest.class );
++    }
++
++    /**
++     * Rigourous Test :-)
++     */
++    public void testApp()
++    {
++        assertTrue( true );
++    }
++}
+diff --git a/src/test/java/SeleniumTest.java b/src/test/java/SeleniumTest.java
+new file mode 100644
+index 0000000..f12702f
+--- /dev/null
++++ b/src/test/java/SeleniumTest.java
+@@ -0,0 +1,16 @@
++import org.openqa.selenium.WebDriver;
++import org.openqa.selenium.chrome.ChromeDriver;
++import org.testng.annotations.AfterTest;
++import org.testng.annotations.Test;
++
++public class SeleniumTest {
++
++    public static void main(String[] args) {
++        WebDriver driver = new ChromeDriver();
++
++    }
++    @Test
++    public void sampleTest(){
++        System.out.println("Hello");
++    }
++}
